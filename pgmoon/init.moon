@@ -177,7 +177,11 @@ class Postgres
         pool: @pool_name or "#{@host}:#{@port}:#{@database}:#{@user}"
       }
 
-    ok, err = @sock\connect @host, @port, opts
+    local ok, err
+    if @host\sub(1, 5) == "unix:"
+      ok, err = @sock\connect "#{@host}/.s.PGSQL.#{@port}", opts
+    else
+      ok, err = @sock\connect @host, @port, opts
     return nil, err unless ok
 
     if @sock\getreusedtimes! == 0

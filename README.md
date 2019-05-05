@@ -64,6 +64,10 @@ of options. The table can have the following keys:
 * `"pool"`: optional name of pool to use when using OpenResty cosocket (defaults to `"#{host}:#{port}:#{database}"`)
 * `"socket_type"`: optional, the type of socket to use, one of: `"nginx"`, `"luasocket"`, `cqueues` (default: `"nginx"` if in nginx, `"luasocket"` otherwise)
 
+If `"socket_type"` is set to `"nginx"` then the connection can be made using
+unix sockets by setting `"host"` to `"unix:/run/postgres"` (or wherever your
+postgres unix socket directory is).
+
 Methods on the `Postgres` object returned by `new`:
 
 ### success, err = postgres:connect()
